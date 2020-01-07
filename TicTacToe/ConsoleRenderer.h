@@ -11,7 +11,7 @@ public:
 
 	void Draw(const Board& board) const;
 	// Shows a winning message
-	void ShowEndScreen(const HumanPlayer& player) const;
+	void ShowEndScreen(const IPlayer* player) const;
 	// Shows a tie message
 	void ShowEndScreen() const;
 

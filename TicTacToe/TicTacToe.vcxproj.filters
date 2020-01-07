@@ -44,5 +44,8 @@
     <ClInclude Include="ConsoleRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

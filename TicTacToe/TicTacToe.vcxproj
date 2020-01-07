@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="ConsoleRenderer.h" />
+    <ClInclude Include="IPlayer.h" />
     <ClInclude Include="HumanPlayer.h" />
     <ClInclude Include="TicTacToeGame.h" />
   </ItemGroup>

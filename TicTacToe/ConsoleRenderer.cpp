@@ -46,12 +46,12 @@ void ConsoleRenderer::Draw(const Board& board) const
 	std::cout << std::endl;
 }
 
-void ConsoleRenderer::ShowEndScreen(const HumanPlayer& player) const
+void ConsoleRenderer::ShowEndScreen(const IPlayer* player) const
 {
 	if (!m_isActive)
 		return;
 
-	std::cout << "Congratulations " << player.GetName() << ". You won! :)\n";
+	std::cout << "Congratulations " << player->GetName() << ". You won! :)\n";
 }
 
 void ConsoleRenderer::ShowEndScreen() const

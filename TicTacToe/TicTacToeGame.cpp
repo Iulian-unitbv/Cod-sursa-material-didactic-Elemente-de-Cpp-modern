@@ -3,16 +3,18 @@
 #include "HumanPlayer.h"
 #include "ConsoleRenderer.h"
 
+#include <memory>
+
 void TicTacToeGame::Run()
 {
 	Board board;
-	HumanPlayer player1("Player 1");
-	HumanPlayer player2("Player 2");
+	std::unique_ptr<IPlayer> firstPlayer = std::make_unique<HumanPlayer>("Player 1");
+	std::unique_ptr<IPlayer> secondPlayer = std::make_unique<HumanPlayer>("Player 2");
 
 	ConsoleRenderer renderer;
 
-	std::reference_wrapper<HumanPlayer> currentPlayer = player1;
-	std::reference_wrapper<HumanPlayer> nextPlayer = player2;
+	IPlayer* currentPlayer = firstPlayer.get();
+	IPlayer* nextPlayer = secondPlayer.get();
 	Board::Piece currentPiece = Board::Piece::Cross;
 	Board::Piece nextPiece = Board::Piece::Nought;
 
@@ -23,7 +25,7 @@ void TicTacToeGame::Run()
 		bool isInputOk = false;
 		while (!isInputOk)
 		{
-			const Board::Position& position = currentPlayer.get().GetNextAction();
+			const Board::Position& position = currentPlayer->GetNextAction();
 			if (!board[position])
 			{
 				board[position] = currentPiece;

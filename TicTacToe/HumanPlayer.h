@@ -1,16 +1,14 @@
 #pragma once
-#include "Board.h"
+#include "IPlayer.h"
 
-#include <string>
-
-class HumanPlayer
+class HumanPlayer : public IPlayer
 {
 public:
 	HumanPlayer(const std::string& name);
 
-	Board::Position GetNextAction() const;
+	Board::Position GetNextAction() override;
 
-	const std::string& GetName() const;
+	const std::string& GetName() const override;
 
 private:
 	std::string m_name;

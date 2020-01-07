@@ -7,7 +7,7 @@ HumanPlayer::HumanPlayer(const std::string& name) : m_name(name)
 	// empty
 }
 
-Board::Position HumanPlayer::GetNextAction() const
+Board::Position HumanPlayer::GetNextAction()
 {
 	std::cout << m_name << ", where do you want to put your chessman?\n";
 	
