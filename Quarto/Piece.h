@@ -25,4 +25,13 @@ public:
 		Round,
 		Square
 	};
+
+public:
+	Piece(Body body, Color color, Height height, Shape shape);
+
+private:
+	Body m_body;
+	Color m_color;
+	Height m_height;
+	Shape m_shape;
 };
