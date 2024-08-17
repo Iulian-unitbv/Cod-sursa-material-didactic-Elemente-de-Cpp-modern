@@ -38,8 +38,8 @@ public:
 	Shape GetShape() const { return m_shape; };
 
 private:
-	Body m_body;
-	Color m_color;
-	Height m_height;
-	Shape m_shape;
+	Body m_body : 1;
+	Color m_color : 1;
+	Height m_height : 1;
+	Shape m_shape : 1;
 };
