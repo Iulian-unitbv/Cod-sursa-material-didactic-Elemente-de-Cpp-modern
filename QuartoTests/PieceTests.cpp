@@ -18,5 +18,10 @@ namespace QuartoTests
 			Assert::IsTrue(Piece::Height::Short == piece.GetHeight());
 			Assert::IsTrue(Piece::Shape::Square == piece.GetShape());
 		}
+
+		TEST_METHOD(SizeOfPieceEqualsOne)
+		{
+			Assert::AreEqual(1U, sizeof(Piece));
+		}
 	};
 }
