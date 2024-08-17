@@ -1,26 +1,28 @@
 #pragma once
+#include <cstdint>
+
 class Piece
 {
 public:
-	enum class Body
+	enum class Body : uint8_t
 	{
 		Full,
 		Hollow
 	};
 
-	enum class Color
+	enum class Color : uint8_t
 	{
 		Dark,
 		Light
 	};
 
-	enum class Height
+	enum class Height : uint8_t
 	{
 		Short,
 		Tall
 	};
 
-	enum class Shape
+	enum class Shape : uint8_t
 	{
 		Round,
 		Square
