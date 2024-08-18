@@ -6,5 +6,5 @@ Piece::Piece(Body body, Color color, Height height, Shape shape) :
 	m_height{ height },
 	m_shape{ shape }
 {
-	// empty
+	static_assert(sizeof(*this) == 1, "This class should be 1 byte in size");
 }
