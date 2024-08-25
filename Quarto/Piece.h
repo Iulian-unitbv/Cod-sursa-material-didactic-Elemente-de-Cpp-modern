@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <ostream>
 
 class Piece
 {
@@ -43,3 +44,5 @@ private:
 	Height m_height : 1;
 	Shape m_shape : 1;
 };
+
+std::ostream& operator << (std::ostream& os, const Piece& piece);
