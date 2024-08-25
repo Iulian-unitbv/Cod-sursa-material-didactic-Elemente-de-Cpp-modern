@@ -23,5 +23,16 @@ namespace QuartoTests
 		{
 			Assert::AreEqual(1U, sizeof(Piece));
 		}
+
+		TEST_METHOD(PrintPiece)
+		{
+			Piece piece{ Piece::Body::Full, Piece::Color::Light, Piece::Height::Tall, Piece::Shape::Round };
+
+			std::string expectedOutput = "0110";
+			std::ostringstream stream;
+			stream << piece;
+			std::string actualOutput = stream.str();
+			Assert::AreEqual(expectedOutput, actualOutput, L"If you see this message, piece is not printed correctly");
+		}
 	};
 }
