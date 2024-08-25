@@ -8,3 +8,12 @@ Piece::Piece(Body body, Color color, Height height, Shape shape) :
 {
 	static_assert(sizeof(*this) == 1, "This class should be 1 byte in size");
 }
+
+std::ostream& operator<<(std::ostream& os, const Piece& piece)
+{
+	return os
+		<< static_cast<int>(piece.GetBody())
+		<< static_cast<int>(piece.GetColor())
+		<< static_cast<int>(piece.GetHeight())
+		<< static_cast<int>(piece.GetShape());
+}
