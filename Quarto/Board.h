@@ -18,6 +18,8 @@ public:
 	// Getter/Setter
 	std::optional<Piece>& operator [] (const Position& position);
 
+	friend std::ostream& operator << (std::ostream& os, const Board& board);
+
 private:
 	static constexpr size_t kWidth = 4;
 	static constexpr size_t kHeight = 4;
