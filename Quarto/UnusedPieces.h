@@ -7,6 +7,16 @@
 // Holds all the unused pieces throughout a game.
 class UnusedPieces
 {
+public:
+	// Creates a pool with the 16 possible pieces.
+	UnusedPieces();
+
+	// Removes the piece found with given name and returns it.
+	// Raises exception if it is not found.
+	Piece PickPiece(const std::string& name);
+
+	friend std::ostream& operator << (std::ostream& os, const UnusedPieces& unusedPieces);
+
 private:
 	std::unordered_map<std::string, Piece> m_pool;
 };
