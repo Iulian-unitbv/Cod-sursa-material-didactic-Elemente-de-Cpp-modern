@@ -1,5 +1,6 @@
 #include "UnusedPieces.h"
 
+#include <ranges>
 #include <sstream>
 
 UnusedPieces::UnusedPieces()
@@ -23,5 +24,7 @@ Piece UnusedPieces::PickPiece(const std::string& name)
 
 std::ostream& operator<<(std::ostream& os, const UnusedPieces& unusedPieces)
 {
+	for (const auto& pieceName : std::views::keys(unusedPieces.m_pool))
+		os << pieceName << ' ';
 	return os;
 }
