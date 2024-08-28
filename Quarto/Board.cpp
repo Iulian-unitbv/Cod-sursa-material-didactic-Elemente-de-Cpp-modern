@@ -16,5 +16,20 @@ std::optional<Piece>& Board::operator [] (const Position& position)
 
 std::ostream& operator << (std::ostream& os, const Board& board)
 {
+	constexpr char kEmptyCell[] = "____";
+	for (auto& row : board.m_pieces)
+	{
+		for (auto& cell : row)
+		{
+			if (cell.has_value())
+				os << cell.value();
+			else
+				os << kEmptyCell;
+			os << ' ';
+		}
+
+		os << std::endl;
+	}
+
 	return os;
 }
