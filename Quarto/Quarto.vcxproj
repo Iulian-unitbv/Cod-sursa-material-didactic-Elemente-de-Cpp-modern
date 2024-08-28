@@ -21,10 +21,12 @@
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="Piece.h" />
+    <ClInclude Include="UnusedPieces.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Piece.cpp" />
+    <ClCompile Include="UnusedPieces.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
