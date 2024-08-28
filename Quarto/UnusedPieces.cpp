@@ -19,7 +19,10 @@ UnusedPieces::UnusedPieces()
 
 Piece UnusedPieces::PickPiece(const std::string& name)
 {
-	return Piece{ Piece::Body::Full, Piece::Color::Dark, Piece::Height::Short, Piece::Shape::Round };
+	if (auto node{ m_pool.extract(name) }; node)
+		return std::move(node.mapped());
+	else
+		throw std::out_of_range{ "Piece not found." };
 }
 
 std::ostream& operator<<(std::ostream& os, const UnusedPieces& unusedPieces)
