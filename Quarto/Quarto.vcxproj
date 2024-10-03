@@ -21,11 +21,13 @@
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="Piece.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="UnusedPieces.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Piece.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="UnusedPieces.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
