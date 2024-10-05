@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <sstream>
 
 Player::Player(std::string&& name) : m_name{ std::move(name) }
 {
@@ -7,7 +8,10 @@ Player::Player(std::string&& name) : m_name{ std::move(name) }
 
 Piece Player::PickPiece(std::istream& is, UnusedPieces& unusedPieces)
 {
-	return Piece{ Piece::Body::Full, Piece::Color::Dark, Piece::Height::Short, Piece::Shape::Square };
+	std::string pickedPieceName;
+	is >> pickedPieceName;
+	Piece pickedPiece{ unusedPieces.PickPiece(pickedPieceName) };
+	return std::move(pickedPiece);
 }
 
 Board::Position Player::PlacePiece(std::istream& is, Piece&& piece, Board& board)
