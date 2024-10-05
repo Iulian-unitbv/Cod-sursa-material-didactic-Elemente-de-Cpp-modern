@@ -1,7 +1,8 @@
 #include "Player.h"
 
-Player::Player(std::string&& name)
+Player::Player(std::string&& name) : m_name{ std::move(name) }
 {
+	// empty
 }
 
 Piece Player::PickPiece(std::istream& is, UnusedPieces& unusedPieces)
