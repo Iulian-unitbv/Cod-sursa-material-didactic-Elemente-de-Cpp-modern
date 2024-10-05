@@ -17,5 +17,5 @@ Board::Position Player::PlacePiece(std::istream& is, Piece&& piece, Board& board
 
 std::ostream& operator<<(std::ostream& os, const Player& player)
 {
-	return os;
+	return os << player.m_name;
 }
