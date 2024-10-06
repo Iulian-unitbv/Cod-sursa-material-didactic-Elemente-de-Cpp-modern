@@ -1,4 +1,5 @@
 #include "Board.h"
+#include <istream>
 
 const std::optional<Piece>& Board::operator [] (const Position& position) const
 {
@@ -32,4 +33,28 @@ std::ostream& operator << (std::ostream& os, const Board& board)
 	}
 
 	return os;
+}
+
+std::istream& operator >> (std::istream& is, Board::Position& position)
+{
+	// this little trick is needed here to read numbers instead of ASCII codes
+	int64_t tempRow;
+	int64_t tempColumn;
+	if (is >> tempRow >> tempColumn)
+	{
+		using T = Board::PositionComponentType;
+		if (tempRow >= std::numeric_limits<T>::min() &&
+			tempRow <= std::numeric_limits<T>::max() &&
+			tempColumn >= std::numeric_limits<T>::min() &&
+			tempColumn <= std::numeric_limits<T>::max())
+		{
+			auto& [row, column] = position;
+			row = static_cast<T>(tempRow);
+			column = static_cast<T>(tempColumn);
+		}
+		else
+			is.setstate(std::ios::failbit);
+	}
+
+	return is;
 }

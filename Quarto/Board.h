@@ -8,7 +8,8 @@
 class Board
 {
 public:
-	using Position = std::tuple<uint8_t, uint8_t>;
+	using PositionComponentType = uint8_t;
+	using Position = std::tuple<PositionComponentType, PositionComponentType>;
 
 public:
 	Board() = default;
@@ -27,3 +28,5 @@ private:
 private:
 	std::array<std::array<std::optional<Piece>, kWidth>, kHeight> m_pieces;
 };
+
+std::istream& operator >> (std::istream& is, Board::Position& position);
