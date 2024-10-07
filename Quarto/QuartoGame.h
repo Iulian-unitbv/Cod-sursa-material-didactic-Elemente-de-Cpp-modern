@@ -2,4 +2,6 @@
 
 class QuartoGame
 {
+public:
+	void Run();
 };
