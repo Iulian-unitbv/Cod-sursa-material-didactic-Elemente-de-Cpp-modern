@@ -21,5 +21,7 @@ void QuartoGame::Run()
 	// update
 	while (true)
 	{
+		Piece pickedPiece{ Player::PickPiece(std::cin, unusedPieces) };
+        Player::PlacePiece(std::cin, std::move(pickedPiece), board);
 	}
 }
