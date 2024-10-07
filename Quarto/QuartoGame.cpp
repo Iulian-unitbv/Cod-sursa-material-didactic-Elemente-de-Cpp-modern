@@ -2,4 +2,10 @@
 
 void QuartoGame::Run()
 {
+	// initialization
+
+	// update
+	while (true)
+	{
+	}
 }
