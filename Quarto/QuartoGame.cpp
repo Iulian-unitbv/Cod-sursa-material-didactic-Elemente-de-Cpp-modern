@@ -18,6 +18,9 @@ void QuartoGame::Run()
 	std::cin >> playerName;
 	Player secondPlayer{ std::move(playerName) };
 
+    std::reference_wrapper<Player> pickingPlayer{ firstPlayer };
+    auto placingPlayer{ std::ref(secondPlayer) };
+
 	// update
 	while (true)
 	{
@@ -28,10 +31,12 @@ void QuartoGame::Run()
         std::cout << "The unused pieces are the following:" << std::endl;
         std::cout << unusedPieces << std::endl;
 
-        std::cout << firstPlayer << ", which piece do you want to pick for " << secondPlayer << '?' << std::endl;
+        std::cout << pickingPlayer << ", which piece do you want to pick for " << placingPlayer << '?' << std::endl;
 		Piece pickedPiece{ Player::PickPiece(std::cin, unusedPieces) };
 
-        std::cout << secondPlayer << ", where do you want to place the piece on the board?" << std::endl;
+        std::cout << placingPlayer << ", where do you want to place the piece on the board?" << std::endl;
         Player::PlacePiece(std::cin, std::move(pickedPiece), board);
+
+        std::swap(pickingPlayer, placingPlayer);
 	}
 }
