@@ -32,10 +32,23 @@ void QuartoGame::Run()
         std::cout << unusedPieces << std::endl;
 
         std::cout << pickingPlayer << ", which piece do you want to pick for " << placingPlayer << '?' << std::endl;
-		Piece pickedPiece{ Player::PickPiece(std::cin, unusedPieces) };
+
+        std::optional<Piece> pickedPiece;
+        while (true)
+        {
+            try
+            {
+                pickedPiece = Player::PickPiece(std::cin, unusedPieces);
+                break;
+            }
+            catch (const std::out_of_range& exception)
+            {
+                std::cout << exception.what() << " Try again." << std::endl;
+            }
+        }
 
         std::cout << placingPlayer << ", where do you want to place the piece on the board?" << std::endl;
-        Player::PlacePiece(std::cin, std::move(pickedPiece), board);
+        Player::PlacePiece(std::cin, std::move(pickedPiece.value()), board);
 
         std::swap(pickingPlayer, placingPlayer);
 	}
