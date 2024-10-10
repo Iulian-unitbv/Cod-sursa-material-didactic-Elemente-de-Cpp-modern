@@ -48,7 +48,30 @@ void QuartoGame::Run()
         }
 
         std::cout << placingPlayer << ", where do you want to place the piece on the board?" << std::endl;
-        Player::PlacePiece(std::cin, std::move(pickedPiece.value()), board);
+
+        while (true)
+        {
+            try
+            {
+                try
+                {
+                    Player::PlacePiece(std::cin, std::move(pickedPiece.value()), board);
+                    break;
+                }
+                catch (const std::invalid_argument&)
+                {
+                    // clear flags
+                    std::cin.clear();
+                    // ignore all further input, by moving to the end of the stream
+                    std::cin.seekg(std::ios::end);
+                    throw;
+                }
+            }
+            catch (const std::exception& exception)
+            {
+                std::cout << exception.what() << " Try again." << std::endl;
+            }
+        }
 
         std::swap(pickingPlayer, placingPlayer);
 	}
