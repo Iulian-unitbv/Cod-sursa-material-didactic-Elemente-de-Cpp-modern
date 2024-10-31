@@ -64,5 +64,7 @@ std::ostream& operator << (std::ostream& os, const Board& board)
 
 Board::LineView Board::GetLineView(BoardTransformer&& transformer) const
 {
-	return Board::LineView{};
+	return
+		std::views::iota(0u, kWidth) |
+		std::views::transform(std::move(transformer));
 }
