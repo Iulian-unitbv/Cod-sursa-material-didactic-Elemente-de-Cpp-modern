@@ -1,10 +1,16 @@
 #include "CppUnitTest.h"
 
+#include <algorithm>
+#include <ranges>
 #include <vector>
 
 #include "Board.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using enum Piece::Body;
+using enum Piece::Color;
+using enum Piece::Height;
+using enum Piece::Shape;
 
 namespace QuartoTests
 {
@@ -23,7 +29,7 @@ namespace QuartoTests
 		TEST_METHOD(SetGetAtOneOne)
 		{
 			Board board;
-			Piece piece{ Piece::Body::Hollow, Piece::Color::Dark, Piece::Height::Short, Piece::Shape::Square };
+			Piece piece{ Hollow, Dark, Short, Square };
 			Board::Position position{ 1, 1 };
 
 			// test setter
@@ -73,7 +79,7 @@ namespace QuartoTests
 		TEST_METHOD(PrintBoard)
 		{
 			Board board;
-			board[{1, 2}] = Piece{ Piece::Body::Hollow, Piece::Color::Light, Piece::Height::Short, Piece::Shape::Round };
+			board[{1, 2}] = Piece{ Hollow, Light, Short, Round };
 
 			std::string expectedOutput{
 				"____ ____ ____ ____ \n"
@@ -87,6 +93,110 @@ namespace QuartoTests
 			std::string actualOutput{ stream.str() };
 
 			Assert::AreEqual(expectedOutput, actualOutput);
+		}
+
+		TEST_METHOD(ViewRow)
+		{
+			auto expectedPieces = {
+				Piece{ Hollow, Light, Short, Round  },
+				Piece{ Full,   Light, Short, Round  },
+				Piece{ Hollow, Dark,  Short, Round  },
+				Piece{ Hollow, Light, Short, Square }
+			};
+			Board board;
+			constexpr uint8_t row{ 2 };
+			for (uint8_t column{ 0 }; const auto & expectedPiece : expectedPieces)
+			{
+				board[{row, column++}] = expectedPiece;
+			}
+
+			Assert::IsTrue(std::ranges::equal(expectedPieces, board.GetRowView(row), ComparePieces));
+		}
+
+		TEST_METHOD(ViewColumn)
+		{
+			auto expectedPieces = {
+				Piece{ Hollow, Light, Short, Round  },
+				Piece{ Full,   Light, Short, Round  },
+				Piece{ Hollow, Dark,  Short, Round  },
+				Piece{ Hollow, Light, Short, Square }
+			};
+			Board board;
+			constexpr uint8_t column{ 2 };
+			for (uint8_t row{ 0 }; const auto & expectedPiece : expectedPieces)
+			{
+				board[{row++, column}] = expectedPiece;
+			}
+
+			Assert::IsTrue(std::ranges::equal(expectedPieces, board.GetColumnView(column), ComparePieces));
+		}
+
+		TEST_METHOD(ViewMainDiagonal)
+		{
+			auto expectedPieces = {
+				Piece{ Hollow, Light, Short, Round  },
+				Piece{ Full,   Light, Short, Round  },
+				Piece{ Hollow, Dark,  Short, Round  },
+				Piece{ Hollow, Light, Short, Square }
+			};
+			Board board;
+			for (uint8_t index{ 0 }; const auto & expectedPiece : expectedPieces)
+			{
+				board[{index, index}] = expectedPiece;
+				++index;
+			}
+
+			Assert::IsTrue(std::ranges::equal(expectedPieces, board.GetMainDiagonalView(), ComparePieces));
+		}
+
+		TEST_METHOD(ViewSecondaryDiagonal)
+		{
+			auto expectedPieces = {
+				Piece{ Hollow, Light, Short, Round  },
+				Piece{ Full,   Light, Short, Round  },
+				Piece{ Hollow, Dark,  Short, Round  },
+				Piece{ Hollow, Light, Short, Square }
+			};
+			Board board;
+			uint8_t width = uint8_t(expectedPieces.size());
+			for (uint8_t index{ 0 }; const auto & expectedPiece : expectedPieces)
+			{
+				board[{index, width - index - 1}] = expectedPiece;
+				++index;
+			}
+
+			Assert::IsTrue(std::ranges::equal(expectedPieces, board.GetSecondaryDiagonalView(), ComparePieces));
+		}
+
+		TEST_METHOD(IsFull)
+		{
+			Board board;
+			for (uint8_t row : {0, 1, 2, 3})
+				for (uint8_t column : {0, 1, 2, 3})
+					board[{row, column}] = Piece{ Hollow, Light, Short, Round };
+
+			Assert::IsTrue(board.IsFull());
+		}
+
+		TEST_METHOD(IsNotFull)
+		{
+			Board board;
+			for (uint8_t row : {0, 1, 2, 3})
+				for (uint8_t column : {0, 1, 2})
+					board[{row, column}] = Piece{ Hollow, Light, Short, Round };
+
+			Assert::IsFalse(board.IsFull());
+		}
+
+	private:
+		static bool ComparePieces(const Piece& left, const std::optional<Piece>& right)
+		{
+			return
+				right.has_value() &&
+				left.GetBody() == right->GetBody() &&
+				left.GetColor() == right->GetColor() &&
+				left.GetHeight() == right->GetHeight() &&
+				left.GetShape() == right->GetShape();
 		}
 	};
 }
