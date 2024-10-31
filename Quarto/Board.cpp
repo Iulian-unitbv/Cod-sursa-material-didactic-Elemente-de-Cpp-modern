@@ -16,25 +16,40 @@ std::optional<Piece>& Board::operator [] (const Position& position)
 
 Board::LineView Board::GetRowView(uint8_t row) const
 {
-	return Board::LineView{};
+	return GetLineView(
+		[this, row](size_t index) -> const std::optional<Piece>& {
+			return (*this)[{row, static_cast<uint8_t>(index)}];
+		}
+	);
 }
 
 Board::LineView Board::GetColumnView(uint8_t column) const
 {
-	return Board::LineView{};
-
+	return GetLineView(
+		[this, column](size_t index) -> const std::optional<Piece>& {
+			return(*this)[{static_cast<uint8_t>(index), column}];
+		}
+	);
 }
 
 Board::LineView Board::GetMainDiagonalView() const
 {
-	return Board::LineView{};
-
+	static_assert(kWidth == kHeight);
+	return GetLineView(
+		[this](size_t index) -> const std::optional<Piece>& {
+			return m_pieces[index][index];
+		}
+	);
 }
 
 Board::LineView Board::GetSecondaryDiagonalView() const
 {
-	return Board::LineView{};
-
+	static_assert(kWidth == kHeight);
+	return GetLineView(
+		[this](size_t index) -> const std::optional<Piece>& {
+			return m_pieces[index][kWidth - index - 1];
+		}
+	);
 }
 
 bool Board::IsFull() const
