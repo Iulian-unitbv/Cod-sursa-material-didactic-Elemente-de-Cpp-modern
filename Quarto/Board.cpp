@@ -14,6 +14,34 @@ std::optional<Piece>& Board::operator [] (const Position& position)
 	return const_cast<std::optional<Piece>&>(std::as_const(*this)[position]);
 }
 
+Board::LineView Board::GetRowView(uint8_t row) const
+{
+	return Board::LineView{};
+}
+
+Board::LineView Board::GetColumnView(uint8_t column) const
+{
+	return Board::LineView{};
+
+}
+
+Board::LineView Board::GetMainDiagonalView() const
+{
+	return Board::LineView{};
+
+}
+
+Board::LineView Board::GetSecondaryDiagonalView() const
+{
+	return Board::LineView{};
+
+}
+
+bool Board::IsFull() const
+{
+	return false;
+}
+
 std::ostream& operator << (std::ostream& os, const Board& board)
 {
 	constexpr char kEmptyCell[] = "____";
@@ -32,4 +60,9 @@ std::ostream& operator << (std::ostream& os, const Board& board)
 	}
 
 	return os;
+}
+
+Board::LineView Board::GetLineView(BoardTransformer&& transformer) const
+{
+	return Board::LineView{};
 }
