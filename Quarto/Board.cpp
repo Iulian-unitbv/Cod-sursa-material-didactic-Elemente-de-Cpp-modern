@@ -1,4 +1,5 @@
 #include "Board.h"
+#include <algorithm>
 
 const std::optional<Piece>& Board::operator [] (const Position& position) const
 {
@@ -54,7 +55,11 @@ Board::LineView Board::GetSecondaryDiagonalView() const
 
 bool Board::IsFull() const
 {
-	return false;
+	return std::ranges::all_of(m_pieces,
+		[](const auto& row) {
+			return std::ranges::all_of(row, &std::optional<Piece>::has_value);
+		}
+	);
 }
 
 std::ostream& operator << (std::ostream& os, const Board& board)
