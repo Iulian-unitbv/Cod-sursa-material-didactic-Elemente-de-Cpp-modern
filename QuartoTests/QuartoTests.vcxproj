@@ -102,7 +102,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;$(SolutionDir)Quarto\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Piece.obj;Board.obj;UnusedPieces.obj;Player.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Piece.obj;Board.obj;UnusedPieces.obj;Player.obj;BoardStateChecker.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -168,6 +168,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BoardStateCheckerTests.cpp" />
     <ClCompile Include="BoardTests.cpp" />
     <ClCompile Include="PieceTests.cpp" />
     <ClCompile Include="PlayerTests.cpp" />
