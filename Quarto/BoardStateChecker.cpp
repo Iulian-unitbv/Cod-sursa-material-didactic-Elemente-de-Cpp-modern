@@ -1,10 +1,28 @@
 #include "BoardStateChecker.h"
 
+#include <algorithm>
+
 namespace
 {
 	bool HaveSharedCharacteristics(const Board::LineView& view)
 	{
-		return false;
+		if (view.empty() || !std::ranges::all_of(view, &std::optional<Piece>::has_value))
+			return false;
+
+		constexpr size_t numCharacteristics{ 4 };
+		std::array<bool, numCharacteristics> matchingCharacteristics;
+		std::ranges::fill(matchingCharacteristics, true);
+
+		auto it{ view.begin() };
+		for (auto prev{ it++ }; it != view.end(); prev = it++)
+		{
+			matchingCharacteristics[0] &= (*prev)->GetBody() == (*it)->GetBody();
+			matchingCharacteristics[1] &= (*prev)->GetColor() == (*it)->GetColor();
+			matchingCharacteristics[2] &= (*prev)->GetHeight() == (*it)->GetHeight();
+			matchingCharacteristics[3] &= (*prev)->GetShape() == (*it)->GetShape();
+		}
+
+		return std::ranges::any_of(matchingCharacteristics, std::identity());
 	}
 }
 
