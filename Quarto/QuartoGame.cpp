@@ -1,5 +1,6 @@
 #include "QuartoGame.h"
 #include "Player.h"
+#include "BoardStateChecker.h"
 
 #include <iostream>
 
@@ -49,13 +50,14 @@ void QuartoGame::Run()
 
         std::cout << placingPlayer << ", where do you want to place the piece on the board?" << std::endl;
 
+        Board::Position placedPosition;
         while (true)
         {
             try
             {
                 try
                 {
-                    Player::PlacePiece(std::cin, std::move(pickedPiece.value()), board);
+                    placedPosition = Player::PlacePiece(std::cin, std::move(pickedPiece.value()), board);
                     break;
                 }
                 catch (const std::invalid_argument&)
@@ -71,6 +73,19 @@ void QuartoGame::Run()
             {
                 std::cout << exception.what() << " Try again." << std::endl;
             }
+        }
+
+        // check board state before swapping players and in case of end move, leave update loop
+        BoardStateChecker::State state{ BoardStateChecker::Check(board, placedPosition) };
+        if (state == BoardStateChecker::State::Win)
+        {
+            std::cout << "We have a winner!" << std::endl << "Congratulations: " << placingPlayer << std::endl;
+            break;
+        }
+        else if (state == BoardStateChecker::State::Draw)
+        {
+            std::cout << "We have a draw! Congratulations to both players!" << std::endl;
+            break;
         }
 
         std::swap(pickingPlayer, placingPlayer);
