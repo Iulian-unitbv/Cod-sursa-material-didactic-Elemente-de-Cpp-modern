@@ -1,6 +1,7 @@
 #include "TicTacToeGame.h"
 #include "Board.h"
 #include "HumanPlayer.h"
+#include "AiPlayer.h"
 #include "ConsoleRenderer.h"
 
 #include <memory>
@@ -9,7 +10,7 @@ void TicTacToeGame::Run()
 {
 	Board board;
 	std::unique_ptr<IPlayer> firstPlayer = std::make_unique<HumanPlayer>("Player 1");
-	std::unique_ptr<IPlayer> secondPlayer = std::make_unique<HumanPlayer>("Player 2");
+	std::unique_ptr<IPlayer> secondPlayer = std::make_unique<AiPlayer>();
 
 	ConsoleRenderer renderer;
 
