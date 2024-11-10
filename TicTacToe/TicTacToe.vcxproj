@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AiPlayer.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="ConsoleRenderer.cpp" />
     <ClCompile Include="HumanPlayer.cpp" />
@@ -154,9 +155,9 @@
     <ClCompile Include="TicTacToeGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AiPlayer.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="ConsoleRenderer.h" />
-    <ClInclude Include="IPlayer.h" />
     <ClInclude Include="HumanPlayer.h" />
     <ClInclude Include="TicTacToeGame.h" />
   </ItemGroup>
