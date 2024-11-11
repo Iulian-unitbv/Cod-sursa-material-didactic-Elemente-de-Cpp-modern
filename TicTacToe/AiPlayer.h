@@ -2,6 +2,7 @@
 #include "IPlayer.h"
 
 #include <vector>
+#include <unordered_map>
 
 class AiPlayer : public IPlayer
 {
@@ -17,4 +18,5 @@ private:
 
 private:
 	const Board& m_board;
+	std::unordered_map<int64_t, float> m_stateActionCosts;
 };
