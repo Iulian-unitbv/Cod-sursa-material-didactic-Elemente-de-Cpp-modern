@@ -10,7 +10,7 @@ void TicTacToeGame::Run()
 {
 	Board board;
 	std::unique_ptr<IPlayer> firstPlayer = std::make_unique<HumanPlayer>("Player 1");
-	std::unique_ptr<IPlayer> secondPlayer = std::make_unique<AiPlayer>();
+	std::unique_ptr<IPlayer> secondPlayer = std::make_unique<AiPlayer>(board);
 
 	ConsoleRenderer renderer;
 
