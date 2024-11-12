@@ -44,6 +44,7 @@ Board::Position AiPlayer::GetNextAction()
 {
 	std::vector<Board::Position> possibleActions = GetPossibleActions();
 	std::reference_wrapper<Board::Position> bestAction = possibleActions.front();
+	int64_t bestStateActionHash = -1;
 
 	// compute best action
 	float bestActionCost = -std::numeric_limits<float>::infinity();
@@ -55,8 +56,11 @@ Board::Position AiPlayer::GetNextAction()
 		{
 			bestAction = action;
 			bestActionCost = currentActionCost;
+			bestStateActionHash = stateActionHash;
 		}
 	}
+
+	m_previousStateActions.push_back(bestStateActionHash);
 
 	return bestAction;
 }
@@ -65,6 +69,11 @@ const std::string& AiPlayer::GetName() const
 {
 	static std::string name("AiPlayer");
 	return name;
+}
+
+void AiPlayer::FeedReward(float target)
+{
+	m_previousStateActions.clear();
 }
 
 std::vector<Board::Position> AiPlayer::GetPossibleActions() const
