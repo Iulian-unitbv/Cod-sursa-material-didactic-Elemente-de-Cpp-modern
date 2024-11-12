@@ -1,9 +1,13 @@
 #include "AiPlayer.h"
 
 #include <ranges>
+#include <random>
 
 namespace
 {
+	std::random_device randomDevice;
+	std::mt19937 randomEngine(randomDevice());
+
 	int64_t getStateActionHash(const Board& board, const Board::Position& position)
 	{
 		int64_t hash = 0;
@@ -48,17 +52,29 @@ Board::Position AiPlayer::GetNextAction()
 	std::reference_wrapper<Board::Position> bestAction = possibleActions.front();
 	int64_t bestStateActionHash = -1;
 
-	// compute best action
-	float bestActionCost = -std::numeric_limits<float>::infinity();
-	for (auto& action : possibleActions)
+	const float explorationRate = 0.1f;
+	std::bernoulli_distribution bernDist(explorationRate);	// generates 'true' with explorationRate probability
+	if (bernDist(randomEngine))
 	{
-		int64_t stateActionHash = getStateActionHash(m_board, action);
-		float currentActionCost = m_stateActionCosts[stateActionHash];
-		if (currentActionCost > bestActionCost)
+		// randomly pick an action
+		std::uniform_int_distribution<uint32_t> uniformDist(0, (uint32_t)possibleActions.size() - 1);
+		bestAction = possibleActions[uniformDist(randomEngine)];
+		bestStateActionHash = getStateActionHash(m_board, bestAction);
+	}
+	else
+	{
+		// compute best action
+		float bestActionCost = -std::numeric_limits<float>::infinity();
+		for (auto& action : possibleActions)
 		{
-			bestAction = action;
-			bestActionCost = currentActionCost;
-			bestStateActionHash = stateActionHash;
+			int64_t stateActionHash = getStateActionHash(m_board, action);
+			float currentActionCost = m_stateActionCosts[stateActionHash];
+			if (currentActionCost > bestActionCost)
+			{
+				bestAction = action;
+				bestActionCost = currentActionCost;
+				bestStateActionHash = stateActionHash;
+			}
 		}
 	}
 
