@@ -1,5 +1,7 @@
 #include "AiPlayer.h"
 
+#include <ranges>
+
 namespace
 {
 	int64_t getStateActionHash(const Board& board, const Board::Position& position)
@@ -73,6 +75,15 @@ const std::string& AiPlayer::GetName() const
 
 void AiPlayer::FeedReward(float target)
 {
+	const float learningRate = 0.1f;
+
+	for (int64_t stateAction : m_previousStateActions | std::views::reverse)
+	{
+		float& cost = m_stateActionCosts[stateAction];
+		cost += learningRate * (target - cost);
+		target = cost;
+	}
+
 	m_previousStateActions.clear();
 }
 
